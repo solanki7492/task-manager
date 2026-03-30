@@ -46,7 +46,7 @@ export default function HomePage() {
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [total, setTotal] = useState(0);
-  const [pageSize] = useState(10);
+  const [pageSize, setPageSize] = useState(10);
   const [dialogOpen, setDialogOpen] = useState(false);
 
   // Debounce search query
@@ -115,6 +115,10 @@ export default function HomePage() {
   useEffect(() => {
     setPage(1);
   }, [statusFilter]);
+
+  useEffect(() => {
+    setPage(1);
+  }, [pageSize]);
 
   const handleCreateTask = async (title: string) => {
     setActionLoading(true);
@@ -225,6 +229,21 @@ export default function HomePage() {
           <Box sx={{ flexGrow: 1 }}>
             <SearchBar value={searchQuery} onChange={setSearchQuery} />
           </Box>
+          <FormControl sx={{ minWidth: 120 }} size="small">
+            <InputLabel id="page-size-label">Per Page</InputLabel>
+            <Select
+              labelId="page-size-label"
+              id="page-size"
+              value={pageSize}
+              label="Per Page"
+              onChange={(e) => setPageSize(Number(e.target.value))}
+            >
+              <MenuItem value={10}>10</MenuItem>
+              <MenuItem value={20}>20</MenuItem>
+              <MenuItem value={50}>50</MenuItem>
+              <MenuItem value={100}>100</MenuItem>
+            </Select>
+          </FormControl>
           <FormControl sx={{ minWidth: 150 }} size="small">
             <InputLabel id="status-filter-label">Status</InputLabel>
             <Select
